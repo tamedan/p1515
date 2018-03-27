@@ -6,6 +6,21 @@ export default class Layout extends Component {
     super(props);
     autoBind(this);
     this.state = {};
+    Array.prototype.shuffle = function(b) {
+      var i = this.length,
+        j,
+        t;
+      while (i) {
+        j = Math.floor(i-- * Math.random());
+        t =
+          b && typeof this[i].shuffle !== "undefined"
+            ? this[i].shuffle()
+            : this[i];
+        this[i] = this[j];
+        this[j] = t;
+      }
+      return this;
+    };
   }
 
   componentWillMount() {
@@ -27,30 +42,18 @@ export default class Layout extends Component {
         num++;
       }
     }
-
+    let defaultArr = [].concat(plane[0], plane[1], plane[2], plane[3]);
     this.setState({
-      plane
+      plane,
+      defaultArr
     });
   }
-  renderLayout() {
-    let plane = this.state.plane;
-    let row = [];
-    for (let r in plane) {
-      for (let c in plane[r]) {
-        row.push(`<div class='col-md-3 " + plane[r][c] + "'></div>`);
-      }
-    }
-    return row;
-  }
+
   clickElement(e) {
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ element: ", e.target.value);
     let plane = this.state.plane;
     let position = [];
     for (let i = 0; i < 4; i++) {
       if (0 <= plane[i].indexOf(Number(e.target.value))) {
-        console.log("строка: ", i);
-        console.log("в строке: ", plane[i].indexOf(Number(e.target.value)));
-        // position = plane[i][plane[i].indexOf(Number(e.target.value))];
         position.push(i);
         position.push(plane[i].indexOf(Number(e.target.value)));
       }
@@ -62,14 +65,12 @@ export default class Layout extends Component {
     let row = position[0];
     let cell = position[1];
     let plane = this.state.plane;
-    // console.log("plane[position[row]][position[cell]]: ", plane[row][cell]);
     //Определяем положение пустого элемента
     if (plane[row - 1] && plane[row - 1][cell] == 0) {
       plane[row - 1][cell] = plane[row][cell];
       plane[row][cell] = 0;
     }
     if (plane[row][cell + 1] == 0) {
-      console.log("$$$$$$$$");
       plane[row][cell + 1] = plane[row][cell];
       plane[row][cell] = 0;
     }
@@ -86,56 +87,24 @@ export default class Layout extends Component {
     });
   }
 
-  initNumber() {
-    let randNumber = Math.random() * 2;
-    randNumber = Math.floor(randNumber);
-    if (randNumber === 0) {
-      randNumber = 2;
-    } else if (randNumber === 1) {
-      randNumber = 4;
-    }
-    return randNumber;
-  }
-  initRC() {
-    let position = [];
-    let randRow = 0 + Math.random() * 4;
-    let randCol = 0 + Math.random() * 4;
-    randRow = Math.floor(randRow);
-    randCol = Math.floor(randCol);
-    position[0] = randRow;
-    position[1] = randCol;
-
-    return position;
-  }
-
   initPlane(plane) {
-    let inn = 0;
-    for (let i = 0; i < 4; i++) {
-      plane[i].indexOf(null);
-      console.log(
-        "@@@@@@@@@@@@ plane[i].indexOf(null)",
-        plane[i].indexOf(null)
-      );
-      if (plane[i].indexOf(null) < 0) {
-        inn++;
-        if (4 <= inn) {
-          alert("!!!!!!!!!!!!!");
-          return;
-        }
-      }
-    }
-    let randNumber = this.initNumber();
-    let position = this.initRC();
-    if (plane[position[0]][position[1]] !== null) {
-      while (plane[position[0]][position[1]] !== null) {
-        position = this.initRC();
-      }
-    }
-    if (plane[position[0]][position[1]] === null) {
-      plane[position[0]][position[1]] = randNumber;
-      this.setState({
-        plane
-      });
+    this.setState({ plane: plane.shuffle(true) });
+  }
+
+  checkArray(plane) {
+    // let arr = [].concat(plane[0], plane[1], plane[2], plane[3]);
+
+    let defaultArr = this.state.defaultArr;
+    // let defArr = [].concat(
+    //   defaultArr[0],
+    //   defaultArr[1],
+    //   defaultArr[2],
+    //   defaultArr[3]
+    // );
+    console.log("def: ", defaultArr);
+    console.log("plane: ", plane);
+    if (plane === this.state.defaultArr) {
+      alert("Congratulations!");
     }
   }
 
@@ -144,6 +113,7 @@ export default class Layout extends Component {
     console.log("@plane: ", plane);
     let position = this.state.position;
     let clickElement = this.clickElement;
+    this.checkArray(plane);
 
     return (
       <div className="layout">
@@ -173,7 +143,7 @@ export default class Layout extends Component {
             this.initPlane(plane);
           }}
         >
-          start
+          Перемешать
         </button>
       </div>
     );
