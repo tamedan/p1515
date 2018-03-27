@@ -21,7 +21,7 @@ export default class Layout extends Component {
         }
         plane[i][ind] = num;
         if (num === 16) {
-          plane[i][ind] = null;
+          plane[i][ind] = 0;
           break;
         }
         num++;
@@ -62,17 +62,28 @@ export default class Layout extends Component {
     let row = position[0];
     let cell = position[1];
     let plane = this.state.plane;
-    if (plane[position[row]][position[cell]]) {
-      //Определяем положение пустого элемента
-      if (plane[position[row - 1]][position[cell]] === null) {
-      }
-      if (plane[position[row]][position[cell + 1]] === null) {
-      }
-      if (plane[position[row + 1]][position[cell]] === null) {
-      }
-      if (plane[position[row]][position[cell - 1]] === null) {
-      }
+    // console.log("plane[position[row]][position[cell]]: ", plane[row][cell]);
+    //Определяем положение пустого элемента
+    if (plane[row - 1] && plane[row - 1][cell] == 0) {
+      plane[row - 1][cell] = plane[row][cell];
+      plane[row][cell] = 0;
     }
+    if (plane[row][cell + 1] == 0) {
+      console.log("$$$$$$$$");
+      plane[row][cell + 1] = plane[row][cell];
+      plane[row][cell] = 0;
+    }
+    if (plane[row + 1] && plane[row + 1][cell] == 0) {
+      plane[row + 1][cell] = plane[row][cell];
+      plane[row][cell] = 0;
+    }
+    if (plane[row][cell - 1] == 0) {
+      plane[row][cell - 1] = plane[row][cell];
+      plane[row][cell] = 0;
+    }
+    this.setState({
+      plane
+    });
   }
 
   initNumber() {
