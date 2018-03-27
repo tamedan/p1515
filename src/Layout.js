@@ -45,7 +45,8 @@ export default class Layout extends Component {
     let defaultArr = JSON.parse(JSON.stringify(plane));
     this.setState({
       plane,
-      defaultArr
+      defaultArr,
+      motion: 0
     });
   }
 
@@ -64,6 +65,7 @@ export default class Layout extends Component {
     let row = position[0];
     let cell = position[1];
     let plane = this.state.plane;
+    let motion = this.state.motion;
     //Определяем положение пустого элемента
     if (plane[row - 1] && plane[row - 1][cell] == 0) {
       plane[row - 1][cell] = plane[row][cell];
@@ -81,9 +83,10 @@ export default class Layout extends Component {
       plane[row][cell - 1] = plane[row][cell];
       plane[row][cell] = 0;
     }
-
+    motion++;
     this.setState({
-      plane
+      plane,
+      motion
     });
   }
 
@@ -94,7 +97,7 @@ export default class Layout extends Component {
   checkArray(plane) {
     let defaultArr = this.state.defaultArr;
     if (JSON.stringify(plane) == JSON.stringify(defaultArr)) {
-      alert("Congratulations!");
+      // alert("Congratulations!");
     }
   }
 
@@ -103,10 +106,14 @@ export default class Layout extends Component {
     console.log("@plane: ", plane);
     let position = this.state.position;
     let clickElement = this.clickElement;
+    let motion = this.state.motion;
     this.checkArray(plane);
 
     return (
       <div className="layout">
+        <h5>
+          Количество ходов: <span>{motion}</span>
+        </h5>
         <div className="container">
           <div className="row row_l">
             {plane.map(function(obj, i) {
