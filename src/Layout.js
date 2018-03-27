@@ -59,6 +59,20 @@ export default class Layout extends Component {
   }
   checkNull(position) {
     console.log("position: ", position);
+    let row = position[0];
+    let cell = position[1];
+    let plane = this.state.plane;
+    if (plane[position[row]][position[cell]]) {
+      //Определяем положение пустого элемента
+      if (plane[position[row - 1]][position[cell]] === null) {
+      }
+      if (plane[position[row]][position[cell + 1]] === null) {
+      }
+      if (plane[position[row + 1]][position[cell]] === null) {
+      }
+      if (plane[position[row]][position[cell - 1]] === null) {
+      }
+    }
   }
 
   initNumber() {
