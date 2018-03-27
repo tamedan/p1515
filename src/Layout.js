@@ -44,7 +44,7 @@ export default class Layout extends Component {
     }
     let defaultArr = JSON.parse(JSON.stringify(plane));
     this.setState({
-      plane,
+      plane: plane.shuffle(true),
       defaultArr,
       motion: 0
     });
@@ -91,7 +91,7 @@ export default class Layout extends Component {
   }
 
   initPlane(plane) {
-    this.setState({ plane: plane.shuffle(true) });
+    this.setState({ plane: plane.shuffle(true), motion: 0 });
   }
 
   checkArray(plane) {
@@ -103,7 +103,6 @@ export default class Layout extends Component {
 
   render() {
     let plane = this.state.plane;
-    console.log("@plane: ", plane);
     let position = this.state.position;
     let clickElement = this.clickElement;
     let motion = this.state.motion;
