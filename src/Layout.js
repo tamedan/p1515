@@ -42,7 +42,7 @@ export default class Layout extends Component {
         num++;
       }
     }
-    let defaultArr = [].concat(plane[0], plane[1], plane[2], plane[3]);
+    let defaultArr = JSON.parse(JSON.stringify(plane));
     this.setState({
       plane,
       defaultArr
@@ -61,7 +61,6 @@ export default class Layout extends Component {
     this.checkNull(position);
   }
   checkNull(position) {
-    console.log("position: ", position);
     let row = position[0];
     let cell = position[1];
     let plane = this.state.plane;
@@ -82,6 +81,7 @@ export default class Layout extends Component {
       plane[row][cell - 1] = plane[row][cell];
       plane[row][cell] = 0;
     }
+
     this.setState({
       plane
     });
@@ -92,18 +92,8 @@ export default class Layout extends Component {
   }
 
   checkArray(plane) {
-    // let arr = [].concat(plane[0], plane[1], plane[2], plane[3]);
-
     let defaultArr = this.state.defaultArr;
-    // let defArr = [].concat(
-    //   defaultArr[0],
-    //   defaultArr[1],
-    //   defaultArr[2],
-    //   defaultArr[3]
-    // );
-    console.log("def: ", defaultArr);
-    console.log("plane: ", plane);
-    if (plane === this.state.defaultArr) {
+    if (JSON.stringify(plane) == JSON.stringify(defaultArr)) {
       alert("Congratulations!");
     }
   }
@@ -128,7 +118,6 @@ export default class Layout extends Component {
                         className={"col col_" + index + " s_" + cell}
                         ref={"col_" + index}
                         value={cell}
-                        // disabled
                         onClick={clickElement}
                       />
                     );
