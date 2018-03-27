@@ -45,12 +45,14 @@ export default class Layout extends Component {
   clickElement(e) {
     console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ element: ", e.target.value);
     let plane = this.state.plane;
-    let position;
+    let position = [];
     for (let i = 0; i < 4; i++) {
       if (0 <= plane[i].indexOf(Number(e.target.value))) {
         console.log("строка: ", i);
         console.log("в строке: ", plane[i].indexOf(Number(e.target.value)));
-        position = plane[i][plane[i].indexOf(Number(e.target.value))];
+        // position = plane[i][plane[i].indexOf(Number(e.target.value))];
+        position.push(i);
+        position.push(plane[i].indexOf(Number(e.target.value)));
       }
     }
     this.checkNull(position);
