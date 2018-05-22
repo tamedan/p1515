@@ -70,20 +70,23 @@ export default class Layout extends Component {
     if (plane[row - 1] && plane[row - 1][cell] == 0) {
       plane[row - 1][cell] = plane[row][cell];
       plane[row][cell] = 0;
+      motion++;
     }
     if (plane[row][cell + 1] == 0) {
       plane[row][cell + 1] = plane[row][cell];
       plane[row][cell] = 0;
+      motion++;
     }
     if (plane[row + 1] && plane[row + 1][cell] == 0) {
       plane[row + 1][cell] = plane[row][cell];
       plane[row][cell] = 0;
+      motion++;
     }
     if (plane[row][cell - 1] == 0) {
       plane[row][cell - 1] = plane[row][cell];
       plane[row][cell] = 0;
+      motion++;
     }
-    motion++;
     this.setState({
       plane,
       motion
