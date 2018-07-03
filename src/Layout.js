@@ -3,18 +3,11 @@ import autoBind from "react-autobind";
 import jss from "jss";
 import "jss-global";
 import preset from "jss-preset-default";
-// import camelCase from "jss-camel-case";
+import * as style from "./styles/layout.js";
 
 jss.setup(preset());
-const styles = {
-  myButton: {
-    color: "#ff0000",
-    "&:hover": {
-      color: "blue"
-    }
-  }
-};
-const { classes } = jss.createStyleSheet(styles).attach();
+
+const { classes } = jss.createStyleSheet(style.styles).attach();
 
 export default class Layout extends Component {
   constructor(props) {
