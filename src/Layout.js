@@ -1,5 +1,15 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
+import jss from "jss";
+import camelCase from "jss-camel-case";
+
+const style = {
+  myButton: {
+    color: "green"
+  }
+};
+const sheet = jss.createStyleSheet(style);
+sheet.attach();
 
 export default class Layout extends Component {
   constructor(props) {

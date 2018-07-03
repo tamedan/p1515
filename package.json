@@ -6,6 +6,8 @@
   "homepage": "https://codesandbox.io/s/new",
   "main": "src/index.js",
   "dependencies": {
+    "jss": "9.8.7",
+    "jss-camel-case": "6.1.0",
     "react": "16.2.0",
     "react-autobind": "1.0.6",
     "react-dom": "16.2.0",
