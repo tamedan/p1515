@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
 import jss from "jss";
-import camelCase from "jss-camel-case";
+import "jss-global";
+import preset from "jss-preset-default";
+// import camelCase from "jss-camel-case";
 
-const style = jss
-  .createStyleSheet({
-    myButton: {
-      color: "#ff0000"
+jss.setup(preset());
+const styles = {
+  myButton: {
+    color: "#ff0000",
+    "&:hover": {
+      color: "blue"
     }
-  })
-  .attach();
+  }
+};
+const { classes } = jss.createStyleSheet(styles).attach();
 
 export default class Layout extends Component {
   constructor(props) {
@@ -120,7 +125,7 @@ export default class Layout extends Component {
     let clickElement = this.clickElement;
     let motion = this.state.motion;
     this.checkArray(plane);
-    console.log("style: ", style);
+    console.log("classes: ", classes);
 
     return (
       <div className="layout">
@@ -131,7 +136,7 @@ export default class Layout extends Component {
           <div className="row row_l">
             {plane.map(function(obj, i) {
               return (
-                <div className={"layout_row row_" + i}>
+                <div className={"layout_row row_" + i} key={i}>
                   {obj.map(function(cell, index) {
                     return (
                       <input
@@ -139,6 +144,10 @@ export default class Layout extends Component {
                         ref={"col_" + index}
                         value={cell}
                         onClick={clickElement}
+                        onChange={e => {
+                          e.preventDefault();
+                        }}
+                        key={cell}
                       />
                     );
                   })}
@@ -148,7 +157,7 @@ export default class Layout extends Component {
           </div>
         </div>
         <button
-          className={style.classes.myButton}
+          className={classes.myButton}
           onClick={() => {
             this.initPlane(plane);
           }}
