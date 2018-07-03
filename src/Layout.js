@@ -147,6 +147,7 @@ export default class Layout extends Component {
           </div>
         </div>
         <button
+          className={style.myButton}
           onClick={() => {
             this.initPlane(plane);
           }}
