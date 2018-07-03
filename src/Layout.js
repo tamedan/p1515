@@ -3,13 +3,13 @@ import autoBind from "react-autobind";
 import jss from "jss";
 import camelCase from "jss-camel-case";
 
-const style = {
-  myButton: {
-    color: "green"
-  }
-};
-const sheet = jss.createStyleSheet(style);
-sheet.attach();
+const style = jss
+  .createStyleSheet({
+    myButton: {
+      color: "#ff0000"
+    }
+  })
+  .attach();
 
 export default class Layout extends Component {
   constructor(props) {
@@ -120,6 +120,7 @@ export default class Layout extends Component {
     let clickElement = this.clickElement;
     let motion = this.state.motion;
     this.checkArray(plane);
+    console.log("style: ", style);
 
     return (
       <div className="layout">
@@ -147,7 +148,7 @@ export default class Layout extends Component {
           </div>
         </div>
         <button
-          className={style.myButton}
+          className={style.classes.myButton}
           onClick={() => {
             this.initPlane(plane);
           }}
